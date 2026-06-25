@@ -13,3 +13,7 @@ Registro del uso de prompts a la hora de pedirle a la IA realizar un trabajo en 
 # Validacion de activos_galseb
 
 > "Segun la informacion de `sql_galseb.md`, `xss_galseb.md`, `comandos_galseb.md` y `borrador de activos_galseb.md` evalua y modifica de ser necesario las informacion de 'activos_galseb.md' para que se alinee mejor con la Triada"
+
+# Creacion de mapa de calor y matriz de riesgo
+
+> "Creamo un mapa de calor en base al contenido previamente proporcionado y adaptalo a junto con lo siguiente: `borrador de matriz_galseb.md`"
