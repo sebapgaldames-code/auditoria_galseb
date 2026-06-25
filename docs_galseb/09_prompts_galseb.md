@@ -17,3 +17,7 @@ Registro del uso de prompts a la hora de pedirle a la IA realizar un trabajo en 
 # Creacion de mapa de calor y matriz de riesgo
 
 > "Creamo un mapa de calor en base al contenido previamente proporcionado y adaptalo a junto con lo siguiente: `borrador de matriz_galseb.md`"
+
+# Politicas de Prevención y Controles de Mitigación
+
+> "necesito las políticas de prevención y controles de mitigación necesarias para cada ataque"
