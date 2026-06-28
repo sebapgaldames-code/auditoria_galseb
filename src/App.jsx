@@ -26,7 +26,11 @@ function App() {
             <h2>Resumen Ejecutivo</h2>
             <p>El presente documento presenta los resultados de la auditoría de seguridad técnica realizada al portal de autogestión y sistemas asociados de <strong>ConectaTel Telecomunicaciones</strong>, un proveedor ficticio de servicios de Internet (ISP).</p>
             <p>La evaluación tuvo como objetivo identificar vulnerabilidades que pudieran comprometer la confidencialidad, integridad y disponibilidad de la información, con especial énfasis en la protección de datos de clientes, la gestión de planes de servicio y la seguridad de los sistemas críticos de la organización.</p>
-            <p>Las pruebas, ejecutadas en un entorno de laboratorio que simula un ambiente de producción, identificaron vulnerabilidades críticas relacionadas con inyección de código, manipulación de scripts y controles de acceso insuficientes.</p>
+            <p>Las pruebas, ejecutadas en un entorno de laboratorio que simula un ambiente de producción, identificaron vulnerabilidades críticas relacionadas con inyección de código, manipulación de scripts y controles de acceso insuficientes. En un escenario real, estas debilidades podrían permitir el acceso no autorizado a información sensible, la modificación de datos de clientes y la afectación de servicios esenciales, evidenciando la necesidad de fortalecer los controles de seguridad antes de un despliegue en producción.</p>
+            <hr />
+            <h3>Contexto del Negocio Auditado</h3>
+            <p><strong>ConectaTel Telecomunicaciones</strong> es un proveedor ficticio de servicios de Internet que administra información sensible de sus clientes, incluyendo datos personales, registros de facturación y configuraciones relacionadas con la provisión de servicios de conectividad.</p>
+            <p>Durante la auditoría se identificaron vulnerabilidades críticas que, de existir en un entorno operativo, podrían ser explotadas para acceder a información confidencial, modificar configuraciones o interrumpir servicios.</p>
           </div>
         )
       case 'sql':
@@ -42,9 +46,11 @@ function App() {
                 <span className="cvss">CVSS <strong>9.8</strong></span>
               </div>
               <div className="vuln-body">
-                <p>La aplicación no valida ni sanitiza adecuadamente los datos ingresados por el usuario, permitiendo que una entrada maliciosa modifique la lógica de la consulta SQL ejecutada por el servidor.</p>
+                <p>La aplicación no valida ni sanitiza adecuadamente los datos ingresados por el usuario, permitiendo que una entrada maliciosa modifique la lógica de la consulta SQL ejecutada por el servidor. Como resultado, el sistema devuelve múltiples registros sin requerir una autenticación válida.</p>
                 <div className="payload-label">// payload utilizado</div>
                 <div className="payload-block">' OR '1'='1</div>
+                <h3>Impacto en ConectaTel</h3>
+                <p>La vulnerabilidad compromete directamente la confidencialidad de la información administrada por ConectaTel, permitiendo el acceso no autorizado a datos de suscriptores.</p>
               </div>
             </div>
           </div>
@@ -62,9 +68,11 @@ function App() {
                 <span className="cvss">CVSS <strong>8.7</strong></span>
               </div>
               <div className="vuln-body">
-                <p>La aplicación procesa y muestra el contenido proporcionado por el usuario sin aplicar mecanismos adecuados de validación o codificación de salida.</p>
+                <p>La aplicación procesa y muestra el contenido proporcionado por el usuario sin aplicar mecanismos adecuados de validación o codificación de salida, permitiendo la ejecución de código JavaScript arbitrario en el navegador de la víctima.</p>
                 <div className="payload-label">// payload utilizado</div>
                 <div className="payload-block">&lt;script&gt;alert('XSS')&lt;/script&gt;</div>
+                <h3>Impacto en ConectaTel</h3>
+                <p>Expone a los usuarios del portal a ataques dirigidos que pueden comprometer la confidencialidad de sus sesiones y datos personales.</p>
               </div>
             </div>
           </div>
@@ -83,8 +91,10 @@ function App() {
               </div>
               <div className="vuln-body">
                 <p>La aplicación no valida ni filtra correctamente la entrada proporcionada por el usuario en la funcionalidad de diagnóstico de red (ping), permitiendo la inyección y ejecución de comandos adicionales del sistema operativo.</p>
-                <div className="payload-label">// payload utilizado</div>
+                <div className="payload-label">// payload utilizado — reveló contenido de /etc/passwd</div>
                 <div className="payload-block">127.0.0.1; cat /etc/passwd</div>
+                <h3>Impacto en ConectaTel</h3>
+                <p>Permite la ejecución de comandos arbitrarios sobre el servidor con los privilegios del proceso de la aplicación. Representa el riesgo más elevado para la disponibilidad y continuidad de los servicios.</p>
               </div>
             </div>
           </div>
@@ -95,6 +105,7 @@ function App() {
             <button className="back-btn" onClick={() => setPage('home')}>← volver al inicio</button>
             <div className="section-eyebrow">// 05 · análisis de activos · 05_activos_galseb.md</div>
             <h2>Activos Afectados</h2>
+            <p>Como parte de la auditoría se realizó un análisis de los activos tecnológicos involucrados. Los ataques identificados afectan componentes críticos de la infraestructura de ConectaTel.</p>
             <div className="vuln-card">
               <table className="assets-table">
                 <thead>
@@ -107,18 +118,33 @@ function App() {
                 <tbody>
                   <tr>
                     <td>Portal Web de Autogestión</td>
-                    <td>Plataforma para clientes.</td>
+                    <td>Plataforma utilizada por clientes para consultar y administrar sus servicios.</td>
                     <td><span className="vuln-tag">SQL Injection</span><span className="vuln-tag">XSS</span></td>
                   </tr>
                   <tr>
                     <td>Base de Datos de Clientes</td>
-                    <td>Almacena datos personales y facturación.</td>
+                    <td>Almacena información personal, credenciales, planes y facturación.</td>
                     <td><span className="vuln-tag">SQL Injection</span></td>
                   </tr>
                   <tr>
                     <td>Servidor de Aplicaciones</td>
-                    <td>Procesa solicitudes del portal.</td>
+                    <td>Ejecuta la lógica del portal y procesa solicitudes de usuarios.</td>
                     <td><span className="vuln-tag">Command Injection</span><span className="vuln-tag">XSS</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sistema Operativo del Servidor</td>
+                    <td>Infraestructura que soporta el portal y sus servicios internos.</td>
+                    <td><span className="vuln-tag">Command Injection</span></td>
+                  </tr>
+                  <tr>
+                    <td>Información de Suscriptores</td>
+                    <td>Datos personales, contratos, historial y facturación.</td>
+                    <td><span className="vuln-tag">SQL Injection</span><span className="vuln-tag">XSS</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sesiones de Usuarios</td>
+                    <td>Cookies y tokens utilizados para mantener la autenticación de los clientes.</td>
+                    <td><span className="vuln-tag">XSS</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -131,6 +157,7 @@ function App() {
             <button className="back-btn" onClick={() => setPage('home')}>← volver al inicio</button>
             <div className="section-eyebrow">// 06 · evaluación de riesgo · 06_matriz_galseb.md</div>
             <h2>Matriz de Riesgo</h2>
+            <p>Relación entre la probabilidad de explotación de las vulnerabilidades identificadas y su impacto en el negocio para priorizar las acciones de mitigación.</p>
             <div className="risk-items">
               <div className="risk-item"><span className="badge badge-critical">Crítico</span><span className="risk-name">SQL Injection</span><span className="risk-meta">Probabilidad: Muy Alta · Impacto: Muy Alto</span></div>
               <div className="risk-item"><span className="badge badge-critical">Crítico</span><span className="risk-name">Command Injection</span><span className="risk-meta">Probabilidad: Alta · Impacto: Muy Alto</span></div>
@@ -144,23 +171,24 @@ function App() {
             <button className="back-btn" onClick={() => setPage('home')}>← volver al inicio</button>
             <div className="section-eyebrow">// 07 · remediación · 07_controles_galseb.md</div>
             <h2>Controles de Mitigación</h2>
+            <p>Políticas de seguridad y controles técnicos recomendados para la prevención y mitigación de las vulnerabilidades identificadas en la infraestructura de ConectaTel.</p>
             <div className="control-group">
               <div className="control-group-header"><span className="badge badge-critical">SQL Injection</span><span className="control-title">Políticas y Controles</span></div>
               <div className="control-col">
                 <div>
                   <h3>Prevención</h3>
                   <ul className="control-list">
-                    <li>Prepared Statements obligatorios</li>
-                    <li>Prohibir concatenación directa de entradas</li>
-                    <li>Validación estricta de entradas</li>
+                    <li>Uso obligatorio de Prepared Statements en toda interacción con BD</li>
+                    <li>Prohibición de concatenación directa de entradas en consultas SQL</li>
+                    <li>Validación estricta de tipo, formato y longitud de entradas</li>
                   </ul>
                 </div>
                 <div>
                   <h3>Mitigación</h3>
                   <ul className="control-list">
-                    <li>ORMs seguros</li>
-                    <li>WAF con reglas específicas</li>
-                    <li>Monitoreo de consultas anómalas</li>
+                    <li>Implementación de ORMs seguros</li>
+                    <li>Web Application Firewall (WAF) con reglas contra SQL Injection</li>
+                    <li>Monitoreo de consultas anómalas con IDS/logging</li>
                   </ul>
                 </div>
               </div>
@@ -173,20 +201,21 @@ function App() {
             <button className="back-btn" onClick={() => setPage('home')}>← volver al inicio</button>
             <div className="section-eyebrow">// 08 · plan de recuperación · 08_recuperacion_galseb.md</div>
             <h2>Plan de Recuperación ante Desastres</h2>
+            <p>Plan de respuesta a incidentes adaptado para los escenarios de compromiso identificados durante la auditoría de ConectaTel.</p>
             <div className="scenario-card">
               <div className="scenario-header"><span className="scenario-num">ESC-01</span><span className="scenario-title">Borrado / Robo de Base de Datos de Clientes</span><span className="badge badge-critical">Crítico</span></div>
               <div className="steps-list">
-                <div className="step-item"><div className="step-num">01</div><div><div className="step-label">Detección e Identificación</div><div className="step-desc">Asignar ID de incidente. Aislar la base de datos comprometida.</div></div></div>
-                <div className="step-item"><div className="step-num">02</div><div><div className="step-label">Contención</div><div className="step-desc">Bloquear accesos no autorizados y activar WAF.</div></div></div>
-                <div className="step-item"><div className="step-num">03</div><div><div className="step-label">Recuperación</div><div className="step-desc">Restaurar backup verificado y aplicar binlogs.</div></div></div>
+                <div className="step-item"><div className="step-num">01</div><div><div className="step-label">Detección e Identificación</div><div className="step-desc">Asignar ID de incidente. Aislar la base de datos comprometida. Preservar evidencia forense sin alterarla.</div></div></div>
+                <div className="step-item"><div className="step-num">02</div><div><div className="step-label">Contención</div><div className="step-desc">Bloquear accesos no autorizados. Detener posible exfiltración en curso. Activar WAF con reglas de emergencia.</div></div></div>
+                <div className="step-item"><div className="step-num">03</div><div><div className="step-label">Recuperación</div><div className="step-desc">Restaurar backup verificado en entorno aislado. Aplicar binary logs para recuperar transacciones recientes.</div></div></div>
               </div>
             </div>
             <div className="scenario-card">
               <div className="scenario-header"><span className="scenario-num">ESC-02</span><span className="scenario-title">Compromiso de Routers Core vía RCE</span><span className="badge badge-critical">Crítico</span></div>
               <div className="steps-list">
-                <div className="step-item"><div className="step-num">01</div><div><div className="step-label">Detección e Identificación</div><div className="step-desc">Activar equipo de redes y aplicar ACLs temporales.</div></div></div>
-                <div className="step-item"><div className="step-num">02</div><div><div className="step-label">Contención</div><div className="step-desc">Desviar tráfico y aislar el router comprometido.</div></div></div>
-                <div className="step-item"><div className="step-num">03</div><div><div className="step-label">Recuperación</div><div className="step-desc">Reinstalar firmware seguro y restaurar configuración.</div></div></div>
+                <div className="step-item"><div className="step-num">01</div><div><div className="step-label">Detección e Identificación</div><div className="step-desc">Asignar ID de incidente. Activar equipo de redes. Aplicar ACLs temporales de emergencia para limitar el daño.</div></div></div>
+                <div className="step-item"><div className="step-num">02</div><div><div className="step-label">Contención</div><div className="step-desc">Desviar tráfico hacia rutas alternativas. Aislar el router comprometido de la infraestructura de producción.</div></div></div>
+                <div className="step-item"><div className="step-num">03</div><div><div className="step-label">Recuperación</div><div className="step-desc">Reinstalar firmware/imagen segura desde fuente verificada. Restaurar configuración desde backup íntegro.</div></div></div>
               </div>
             </div>
           </div>
@@ -213,11 +242,11 @@ function App() {
               <div className="stat-card"><div className="number num-blue">2</div><div className="desc">Escenarios de recuperación</div></div>
             </div>
             <div className="cards-section-label">// Informe</div>
-            <div className="nav-cards">
+            <div className="nav-cards" style={{ gridTemplateColumns: '1fr' }}>
               <button className="nav-card accent-blue" onClick={() => setPage('resumen')}>
                 <div className="card-tag tag-blue">01 · resumen ejecutivo</div>
                 <div className="card-title">Resumen Ejecutivo</div>
-                <p className="card-desc">Contexto del negocio auditado y síntesis de los hallazgos identificados.</p>
+                <p className="card-desc">Contexto del negocio auditado, alcance de la evaluación y síntesis de los hallazgos identificados en el entorno de laboratorio de ConectaTel.</p>
               </button>
             </div>
             <div className="cards-section-label">// Vulnerabilidades Identificadas</div>
@@ -225,30 +254,30 @@ function App() {
               <button className="nav-card accent-red" onClick={() => setPage('sql')}>
                 <div className="card-tag tag-red">02 · vulnerabilidad</div>
                 <div className="card-title">SQL Injection</div>
-                <p className="card-desc">Inyección en el campo User ID del portal. Permite acceso no autorizado a la base de datos de clientes.</p>
+                <p className="card-desc">Inyección en el campo User ID del portal. Permite acceso no autorizado a la base de datos de clientes sin autenticación válida.</p>
               </button>
               <button className="nav-card accent-red" onClick={() => setPage('xss')}>
                 <div className="card-tag tag-red">03 · vulnerabilidad</div>
                 <div className="card-title">Reflected XSS</div>
-                <p className="card-desc">Ejecución de JavaScript arbitrario en el navegador de la víctima.</p>
+                <p className="card-desc">Ejecución de JavaScript arbitrario en el navegador de la víctima. Facilita robo de sesiones y credenciales.</p>
               </button>
               <button className="nav-card accent-red" onClick={() => setPage('cmd')}>
                 <div className="card-tag tag-red">04 · vulnerabilidad</div>
                 <div className="card-title">Command Injection</div>
-                <p className="card-desc">Ejecución de comandos arbitrarios del sistema operativo en la funcionalidad de diagnóstico de red.</p>
+                <p className="card-desc">Ejecución de comandos arbitrarios del SO en la funcionalidad de diagnóstico de red. Compromiso total del servidor.</p>
               </button>
             </div>
-            <div className="cards-section-label">// Análisis</div>
+            <div className="cards-section-label">// Análisis de Impacto</div>
             <div className="nav-cards">
               <button className="nav-card accent-orange" onClick={() => setPage('activos')}>
                 <div className="card-tag tag-orange">05 · activos afectados</div>
                 <div className="card-title">Inspección de Activos</div>
-                <p className="card-desc">Identificación de activos críticos comprometidos y su impacto según CIA.</p>
+                <p className="card-desc">Identificación de activos tecnológicos comprometidos y evaluación de impacto según la tríada CIA.</p>
               </button>
               <button className="nav-card accent-orange" onClick={() => setPage('matriz')}>
                 <div className="card-tag tag-orange">06 · evaluación de riesgo</div>
                 <div className="card-title">Matriz de Riesgo</div>
-                <p className="card-desc">Mapa de calor con relación probabilidad/impacto de cada vulnerabilidad.</p>
+                <p className="card-desc">Mapa de calor con relación probabilidad/impacto de cada vulnerabilidad y nivel de riesgo resultante.</p>
               </button>
             </div>
             <div className="cards-section-label">// Remediación</div>
@@ -261,7 +290,7 @@ function App() {
               <button className="nav-card accent-yellow" onClick={() => setPage('recuperacion')}>
                 <div className="card-tag tag-yellow">08 · recuperación</div>
                 <div className="card-title">Plan de Recuperación ante Desastres</div>
-                <p className="card-desc">Procedimientos operativos para los escenarios de robo de base de datos y compromiso de routers core vía RCE.</p>
+                <p className="card-desc">Procedimientos de respuesta a incidentes para escenarios de robo de base de datos y compromiso de routers core vía RCE.</p>
               </button>
             </div>
           </div>
