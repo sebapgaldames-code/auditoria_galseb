@@ -173,7 +173,7 @@ function PageSQL({ setPage }) {
         <div className="vuln-body">
           <p>La aplicación no valida ni sanitiza adecuadamente los datos ingresados por el usuario, permitiendo que una entrada maliciosa modifique la lógica de la consulta SQL ejecutada por el servidor. Como resultado, el sistema devuelve múltiples registros sin requerir una autenticación válida.</p>
           <div className="payload-label">// payload utilizado</div>
-          <div className="payload-block"><img src="./docs_galseb/imagenes_galseb/Inyeccion_SQL.png" alt="SQL Injection Payload" style={{ maxWidth: '100%', height: 'auto' }} /></div>
+          <div className="payload-block"><img src="./docs_galseb/imagenes_galseb/1782758271395_image.png" alt="SQL Injection Payload" style={{ maxWidth: '100%', height: 'auto' }} /></div>
           <h3>Impacto en ConectaTel</h3>
           <p>La vulnerabilidad compromete directamente la confidencialidad de la información administrada por ConectaTel, permitiendo el acceso no autorizado a datos de suscriptores: información personal, registros de facturación y detalles de servicios contratados.</p>
           <p>El acceso indebido a la base de datos incrementa el riesgo de alteración o eliminación de información crítica, pudiendo generar interrupciones en la prestación de servicios, pérdidas económicas, sanciones regulatorias e impacto reputacional.</p>
@@ -198,7 +198,7 @@ function PageXSS({ setPage }) {
         <div className="vuln-body">
           <p>La aplicación procesa y muestra el contenido proporcionado por el usuario sin aplicar mecanismos adecuados de validación o codificación de salida, permitiendo la ejecución de código JavaScript arbitrario en el navegador de la víctima.</p>
           <div className="payload-label">// payload utilizado</div>
-          <div className="payload-block"><img src="./docs_galseb/imagenes_galseb/XSS.png" alt="XSS Payload" style={{ maxWidth: '100%', height: 'auto' }} /></div>
+          <div className="payload-block"><img src="./docs_galseb/imagenes_galseb/1782758283811_image.png" alt="XSS Payload" style={{ maxWidth: '100%', height: 'auto' }} /></div>
           <h3>Impacto en ConectaTel</h3>
           <p>Expone a los usuarios del portal a ataques dirigidos que pueden comprometer la confidencialidad de sus sesiones y datos personales. Un atacante podría distribuir enlaces especialmente diseñados para ejecutar código malicioso, facilitando el robo de cookies, credenciales e información personal.</p>
           <p>Si el ataque se dirige a usuarios con privilegios administrativos, el impacto podría extenderse a la gestión de servicios, la modificación de configuraciones críticas y el acceso a información sensible de la organización.</p>
@@ -223,7 +223,7 @@ function PageCMD({ setPage }) {
         <div className="vuln-body">
           <p>La aplicación no valida ni filtra correctamente la entrada proporcionada por el usuario en la funcionalidad de diagnóstico de red (ping), permitiendo la inyección y ejecución de comandos adicionales del sistema operativo.</p>
           <div className="payload-label">// payload utilizado — reveló contenido de /etc/passwd</div>
-          <div className="payload-block"><img src="./docs_galseb/imagenes_galseb/Inyeccion_de_Comando.png" alt="Command Injection Payload" style={{ maxWidth: '100%', height: 'auto' }} /></div>
+          <div className="payload-block"><img src="./docs_galseb/imagenes_galseb/1782758290179_image.png" alt="Command Injection Payload" style={{ maxWidth: '100%', height: 'auto' }} /></div>
           <h3>Impacto en ConectaTel</h3>
           <p>Permite la ejecución de comandos arbitrarios sobre el servidor con los privilegios del proceso de la aplicación. Un atacante podría acceder a archivos sensibles, extraer credenciales almacenadas, modificar archivos críticos o utilizar el servidor como punto de acceso para comprometer otros sistemas internos.</p>
           <p>Representa el riesgo más elevado para la disponibilidad y continuidad de los servicios, al posibilitar el despliegue de software malicioso, la interrupción de procesos esenciales y el movimiento lateral hacia la infraestructura interna.</p>
