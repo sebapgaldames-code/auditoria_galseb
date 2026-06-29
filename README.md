@@ -1,18 +1,35 @@
-# React + Vite
+# Auditoría de Seguridad Web - ConectaTel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es el ropositorio con mi proyecto final para la asignatura de Fundamento de seguridad de la informacion.
 
-Currently, two official plugins are available:
+El proyecto es una auditoria a una compañia ficticia llamada ConectaTel y dicha auditoria fue subida como pagina en vercel utilizando React para su creacion.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ¿De que se trata?
 
-## React Compiler
+Se trata sobre un control de seguridad hecho a dicha compañia buscando que este todo en orden y no tengan fallas de seguridad, ademas de que se levanto una aplicacion para no tener que entregar un informe tradicional y que de esta manera todas las personas interesadas puedan saber sobre le tema.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## El proyecto se basa en los siguientes puntos
 
-Note: This will impact Vite dev & build performances.
+1.- Analisis tecnico: 
+Se revisan los flujos de datos, validaciones y configuraciones para detectar riesgos y malas prácticas.
 
-## Expanding the ESLint configuration
+2.- Aplicacion React: 
+Se usa una aplicación React como entorno práctico para demostrar vulnerabilidades y medidas de mitigación.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Vulnerabilidades
+
+Durante el proyecto se evaluan y demuestran la existencia de tres fallas criticas para ConectaTel:
+
+- Inyección SQL: El robo de base de datos de clientes por entes maliciosos
+
+- Cross-Site Scripting (XSS Reflejado): Inyeccion de codigo mal intencionados para el robo de cuentas de administradores
+
+- Inyección de Comandos: La toma de control de servidores mediante herramientas de manipulacion de red.
+
+## Tecnologias Utilizadas
+
+- React - Creacion de la web
+
+- Vite - Motor de la web y sus actualizaciones
+
+- Vercel - Deploy de la web en internet
